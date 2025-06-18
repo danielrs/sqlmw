@@ -1,3 +1,4 @@
+//go:build go1.10
 // +build go1.10
 
 package sqlmw
@@ -15,6 +16,10 @@ type wrappedConnector struct {
 var (
 	_ driver.Connector = wrappedConnector{}
 )
+
+func Connector(driverRef *wrappedDriver, connector driver.Connector) driver.Connector {
+	return wrappedConnector{driverRef: driverRef, parent: connector}
+}
 
 func (c wrappedConnector) Connect(ctx context.Context) (conn driver.Conn, err error) {
 	conn, err = c.driverRef.intr.ConnectorConnect(ctx, c.parent)

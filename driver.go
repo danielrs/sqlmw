@@ -23,7 +23,7 @@ var (
 // Important note: Seeing as the context passed into the various instrumentation calls this package calls,
 // Any call without a context passed will not be intercepted. Please be sure to use the ___Context() and BeginTx()
 // function calls added in Go 1.8 instead of the older calls which do not accept a context.
-func Driver(driver driver.Driver, intr Interceptor) driver.Driver {
+func Driver(driver driver.Driver, intr Interceptor) wrappedDriver {
 	return wrappedDriver{parent: driver, intr: intr}
 }
 
