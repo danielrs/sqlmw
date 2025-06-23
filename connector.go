@@ -17,7 +17,9 @@ var (
 	_ driver.Connector = wrappedConnector{}
 )
 
-func Connector(driverRef *wrappedDriver, connector driver.Connector) driver.Connector {
+// WrapConnector returns the supplied driver.Connector wrapped in a new object that has all of its calls intercepted by
+// the Interceptor in the supplied driver.
+func WrapConnector(driverRef *wrappedDriver, connector driver.Connector) wrappedConnector {
 	return wrappedConnector{driverRef: driverRef, parent: connector}
 }
 
